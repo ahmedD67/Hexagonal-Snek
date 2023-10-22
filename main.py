@@ -74,10 +74,13 @@ snake_arr = [(5, 1), (6, 1), (7, 1)]
 up_dir = True
 right_dir = None
 
+bg = pygame.image.load("images/background_grid.png")
 while running:
     print(x_steps)
     print(y_steps)
-    gen_grid(_side)
+
+    # INSIDE OF THE GAME LOOP
+    screen.blit(bg, (0, 0))
     # this array should contain the (row, col) positions of the snake
 
     keys = pygame.key.get_pressed()
@@ -156,13 +159,12 @@ while running:
             center=center,
             side=0.8 * _side
         )
-        pygame.draw.polygon(surface=screen, color=(135,174,115), points=pt_hex, )
+        pygame.draw.polygon(surface=screen, color=(0,101,0), points=pt_hex, )
 
     blob_collected = snake_arr[0] == (_rand_row, _rand_col)
 
     if not blob_collected:
         # randomly select blob point
-
 
         blob_hex = gen_hexagon(
             center=gen_center(_rand_row, _rand_col),
@@ -171,10 +173,10 @@ while running:
 
         # draw the random blob
         # pygame.draw.polygon(surface=screen, color=_color, points=blob_hex, )
-        pygame.draw.polygon(surface=screen, color=(205, 176, 238), points=blob_hex, )
+        pygame.draw.polygon(surface=screen, color="purple", points=blob_hex, )
     else:
-        _rand_row = np.random.randint(0, y_steps)
-        _rand_col = np.random.randint(0, x_steps)
+        _rand_row = np.random.randint(1, 21)
+        _rand_col = np.random.randint(1, 43)
 
         snake_arr.append(
             (snake_arr[-1][0] + 1, snake_arr[-1][1])
@@ -194,7 +196,7 @@ while running:
     # limits FPS to 60
     # dt is delta time in seconds since last frame, used for framerate-
     # independent physics.
-    dt = clock.tick(30) / 1000
+    dt = clock.tick(60) / 1000
 
 
 pygame.quit()
